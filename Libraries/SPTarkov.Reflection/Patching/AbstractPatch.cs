@@ -16,25 +16,19 @@ public abstract class AbstractPatch : IRuntimePatch
     /// </summary>
     public MethodBase? TargetMethod { get; private set; }
 
-    /// <summary>
-    ///     Is this patch active?
-    /// </summary>
     public bool IsActive { get; private set; }
-
-    /// <summary>
-    ///     Is this patch managed by the PatchManager?
-    /// </summary>
     public bool IsManaged { get; private set; }
-
-    /// <summary>
-    ///     The harmony Id assigned to this patch, usually the name of the patch class.
-    /// </summary>
+    public bool IsYourPatch
+    {
+        get { return _ownersAssembly != null && ReferenceEquals(_ownersAssembly, Assembly.GetCallingAssembly()); }
+    }
     public string HarmonyId
     {
         get { return _harmony?.Id ?? "Harmony Id is null for this patch"; }
     }
 
     private Harmony? _harmony;
+    private readonly Assembly? _ownersAssembly;
 
     private readonly List<HarmonyMethod> _prefixList;
     private readonly List<HarmonyMethod> _postfixList;
@@ -45,9 +39,10 @@ public abstract class AbstractPatch : IRuntimePatch
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="name">Name</param>
+    /// <param name="name">name of the harmony instance</param>
     protected AbstractPatch(string? name = null)
     {
+        _ownersAssembly = Assembly.GetCallingAssembly();
         _harmony = new Harmony(name ?? GetType().Name);
         _prefixList = GetPatchMethods(typeof(PatchPrefixAttribute));
         _postfixList = GetPatchMethods(typeof(PatchPostfixAttribute));
@@ -94,13 +89,17 @@ public abstract class AbstractPatch : IRuntimePatch
         return methods;
     }
 
-    /// <summary>
-    /// Apply patch to target
-    /// </summary>
     public void Enable()
     {
-        // We never want to have duplicated patches, prevent it.
+        // Already active
         if (IsActive)
+        {
+            return;
+        }
+
+        var caller = Assembly.GetCallingAssembly();
+        // No ownership over this patch
+        if (!ReferenceEquals(_ownersAssembly, caller))
         {
             return;
         }
@@ -114,8 +113,6 @@ public abstract class AbstractPatch : IRuntimePatch
 
         try
         {
-            // Using null forgiving operator here because we want to throw if _harmony is null, but want the compiler to shut up about it.
-
             foreach (var prefix in _prefixList)
             {
                 _harmony!.Patch(TargetMethod, prefix: prefix);
@@ -166,13 +163,17 @@ public abstract class AbstractPatch : IRuntimePatch
         Enable();
     }
 
-    /// <summary>
-    /// Remove applied patch from target
-    /// </summary>
     public void Disable()
     {
         // Nothing to disable
         if (!IsActive)
+        {
+            return;
+        }
+
+        var caller = Assembly.GetCallingAssembly();
+        // No ownership over this patch
+        if (!ReferenceEquals(_ownersAssembly, caller))
         {
             return;
         }
