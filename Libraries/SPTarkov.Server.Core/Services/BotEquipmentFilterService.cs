@@ -40,7 +40,7 @@ public class BotEquipmentFilterService(
         var botWeightingAdjustmentsByPlayerLevel = GetBotWeightingAdjustmentsByPlayerLevel(botRole, pmcProfile?.Info?.Level ?? 1);
 
         RandomisationDetails? randomisationDetails = null;
-        if (BotEquipmentConfig.TryGetValue(botRole.ToLowerInvariant(), out var botEquipmentConfig))
+        if (BotEquipmentConfig.TryGetValue(botRole.ToLowerInvariant(), out var botEquipmentConfig) && botEquipmentConfig is not null)
         {
             randomisationDetails = botHelper.GetBotRandomizationDetails(botGenerationDetails.BotLevel, botEquipmentConfig);
         }
@@ -80,7 +80,7 @@ public class BotEquipmentFilterService(
     /// </summary>
     /// <param name="equipmentChanges">Changes to apply</param>
     /// <param name="baseValues">data to update</param>
-    protected void AdjustChances(Dictionary<string, double> equipmentChanges, Dictionary<string, double> baseValues)
+    protected void AdjustChances(Dictionary<string, double>? equipmentChanges, Dictionary<string, double> baseValues)
     {
         if (equipmentChanges is null)
         {
@@ -98,7 +98,7 @@ public class BotEquipmentFilterService(
     /// </summary>
     /// <param name="generationChanges">Changes to apply</param>
     /// <param name="baseBotGeneration">dictionary to update</param>
-    protected void AdjustGenerationChances(Dictionary<string, GenerationData> generationChanges, Generation baseBotGeneration)
+    protected void AdjustGenerationChances(Dictionary<string, GenerationData>? generationChanges, Generation baseBotGeneration)
     {
         if (generationChanges is null)
         {
@@ -107,11 +107,11 @@ public class BotEquipmentFilterService(
 
         foreach (var itemKey in generationChanges)
         {
-            baseBotGeneration.Items.GetByJsonProperty<GenerationData>(itemKey.Key).Weights = generationChanges
-                .GetValueOrDefault(itemKey.Key)
+            baseBotGeneration.Items.GetByJsonProperty<GenerationData>(itemKey.Key)!.Weights = generationChanges
+                .GetValueOrDefault(itemKey.Key)!
                 .Weights;
-            baseBotGeneration.Items.GetByJsonProperty<GenerationData>(itemKey.Key).Whitelist = generationChanges
-                .GetValueOrDefault(itemKey.Key)
+            baseBotGeneration.Items.GetByJsonProperty<GenerationData>(itemKey.Key)!.Whitelist = generationChanges
+                .GetValueOrDefault(itemKey.Key)!
                 .Whitelist;
         }
     }
@@ -134,7 +134,7 @@ public class BotEquipmentFilterService(
     public Dictionary<MongoId, HashSet<MongoId>>? GetBotWeaponSightWhitelist(string botEquipmentRole)
     {
         return BotConfig.Equipment.TryGetValue(botEquipmentRole, out var botEquipmentSettings)
-            ? botEquipmentSettings.WeaponSightWhitelist
+            ? botEquipmentSettings?.WeaponSightWhitelist
             : null;
     }
 
@@ -215,7 +215,7 @@ public class BotEquipmentFilterService(
                 var botEquipment = baseBotNode.BotInventory.Equipment[equipmentSlotKey.Key];
 
                 // Skip equipment slot if whitelist doesn't exist / is empty
-                var whitelistEquipmentForSlot = whitelist.Equipment[equipmentSlotKey.Key.ToString()];
+                var whitelistEquipmentForSlot = whitelist.Equipment?[equipmentSlotKey.Key.ToString()];
                 if (whitelistEquipmentForSlot is null || whitelistEquipmentForSlot.Count == 0)
                 {
                     continue;
@@ -242,7 +242,7 @@ public class BotEquipmentFilterService(
                 var botEquipment = baseBotNode.BotInventory.Equipment[equipmentSlotKvP.Key];
 
                 // Skip equipment slot if blacklist doesn't exist / is empty
-                if (!blacklist.Equipment.TryGetValue(equipmentSlotKvP.Key.ToString(), out var equipmentSlotBlacklist))
+                if (!blacklist.Equipment?.TryGetValue(equipmentSlotKvP.Key.ToString(), out var equipmentSlotBlacklist) ?? true)
                 {
                     continue;
                 }
@@ -275,7 +275,7 @@ public class BotEquipmentFilterService(
             // Loop over each caliber + cartridges of that type
             foreach (var (caliber, cartridges) in baseBotNode.BotInventory.Ammo)
             {
-                if (!whitelist.Cartridge.TryGetValue(caliber, out var matchingWhitelist))
+                if (!whitelist.Cartridge?.TryGetValue(caliber, out var matchingWhitelist) ?? true)
                 // No cartridge whitelist, move to next cartridge
                 {
                     continue;
@@ -297,26 +297,28 @@ public class BotEquipmentFilterService(
             return;
         }
 
-        if (blacklist is not null)
+        if (blacklist is null)
         {
-            foreach (var (caliber, cartridgesAndWeights) in baseBotNode.BotInventory.Ammo)
-            {
-                // Skip cartridge slot if blacklist doesn't exist / is empty
-                blacklist.Cartridge.TryGetValue(caliber, out var cartridgeCaliberBlacklist);
-                if (cartridgeCaliberBlacklist is null || cartridgeCaliberBlacklist.Count == 0)
-                {
-                    continue;
-                }
+            return;
+        }
 
-                // Filter cartridge slot items to just items not in blacklist
-                foreach (
-                    var blacklistedTpl in cartridgeCaliberBlacklist.Where(blacklistedTpl =>
-                        cartridgesAndWeights.ContainsKey(blacklistedTpl)
-                    )
-                )
-                {
-                    cartridgesAndWeights.Remove(blacklistedTpl);
-                }
+        foreach (var (caliber, cartridgesAndWeights) in baseBotNode.BotInventory.Ammo)
+        {
+            // Skip cartridge slot if blacklist doesn't exist / is empty
+            if (
+                (!blacklist.Cartridge?.TryGetValue(caliber, out var cartridgeCaliberBlacklist) ?? true)
+                || cartridgeCaliberBlacklist.Count == 0
+            )
+            {
+                continue;
+            }
+
+            // Filter cartridge slot items to just items not in blacklist
+            foreach (
+                var blacklistedTpl in cartridgeCaliberBlacklist.Where(blacklistedTpl => cartridgesAndWeights.ContainsKey(blacklistedTpl))
+            )
+            {
+                cartridgesAndWeights.Remove(blacklistedTpl);
             }
         }
     }
@@ -359,7 +361,7 @@ public class BotEquipmentFilterService(
                 foreach (var itemToEditKvP in poolAdjustmentKvP.Value)
                 // Only make change if item exists as we're editing, not adding
                 {
-                    if (locationToUpdate[itemToEditKvP.Key] != null || locationToUpdate[itemToEditKvP.Key] == 0)
+                    if (locationToUpdate[itemToEditKvP.Key] == 0)
                     {
                         locationToUpdate[itemToEditKvP.Key] = itemToEditKvP.Value;
                     }
