@@ -56,7 +56,7 @@ public record RagfairOffer
     public double? SummaryCost { get; set; }
 
     [JsonPropertyName("user")]
-    public RagfairOfferUser? User { get; set; }
+    public required RagfairOfferUser User { get; set; }
 
     /// <summary>
     ///     Trader only
