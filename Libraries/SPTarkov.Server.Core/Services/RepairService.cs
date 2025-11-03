@@ -29,6 +29,7 @@ public class RepairService(
     PaymentService paymentService,
     ProfileHelper profileHelper,
     RepairHelper repairHelper,
+    InventoryHelper inventoryHelper,
     ServerLocalisationService serverLocalisationService,
     ConfigServer configServer,
     WeightedRandomHelper weightedRandomHelper
@@ -292,6 +293,7 @@ public class RepairService(
         );
 
         // Find and use repair kit defined in body
+        List<MongoId> kitIdsToDelete = [];
         foreach (var repairKit in repairKits)
         {
             var repairKitInInventory = pmcData.Inventory.Items.FirstOrDefault(item => item.Id == repairKit.Id);
@@ -305,10 +307,22 @@ public class RepairService(
 
             AddMaxResourceToKitIfMissing(repairKitDetails, repairKitInInventory);
 
-            // reduce usages on repairkit used
+            // Reduce usages on repairkit used
+            // TODO - correctly reduce kit resource to 0 and then move to next kit and use that
             repairKitInInventory.Upd.RepairKit.Resource -= repairKitReductionAmount;
 
             output.ProfileChanges[sessionId].Items.ChangedItems.Add(repairKitInInventory);
+
+            if (repairKitInInventory.Upd.RepairKit.Resource <= 0)
+            {
+                // Repair kit was all used up, flag to delete outside of loop
+                kitIdsToDelete.Add(repairKit.Id);
+            }
+        }
+
+        foreach (var kitId in kitIdsToDelete)
+        {
+            inventoryHelper.RemoveItem(pmcData, kitId, sessionId, output);
         }
 
         return new RepairDetails
