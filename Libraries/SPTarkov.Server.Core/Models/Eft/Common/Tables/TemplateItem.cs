@@ -1643,15 +1643,6 @@ public record WeaponRecoilTransformationCurveKey
     public double? Value { get; set; }
 }
 
-public record HealthEffect
-{
-    [JsonPropertyName("type")]
-    public string? Type { get; set; }
-
-    [JsonPropertyName("value")]
-    public double? Value { get; set; }
-}
-
 public record Prefab
 {
     [JsonPropertyName("path")]
@@ -1823,54 +1814,6 @@ public record StackSlotProperties
     public IEnumerable<SlotFilter>? Filters { get; set; }
 }
 
-public record RandomLootSettings
-{
-    [JsonPropertyName("allowToSpawnIdenticalItems")]
-    public bool? AllowToSpawnIdenticalItems { get; set; }
-
-    [JsonPropertyName("allowToSpawnQuestItems")]
-    public bool? AllowToSpawnQuestItems { get; set; }
-
-    [JsonPropertyName("countByRarity")]
-    public IEnumerable<object>? CountByRarity { get; set; } // TODO: object here
-
-    [JsonPropertyName("excluded")]
-    public RandomLootExcluded? Excluded { get; set; }
-
-    [JsonPropertyName("filters")]
-    public IEnumerable<object>? Filters { get; set; } // TODO: object here
-
-    [JsonPropertyName("findInRaid")]
-    public bool? FindInRaid { get; set; }
-
-    [JsonPropertyName("maxCount")]
-    public double? MaxCount { get; set; }
-
-    [JsonPropertyName("minCount")]
-    public double? MinCount { get; set; }
-}
-
-public record RandomLootExcluded
-{
-    [JsonPropertyName("categoryTemplates")]
-    public IEnumerable<object>? CategoryTemplates { get; set; } // TODO: object here
-
-    [JsonPropertyName("rarity")]
-    public IEnumerable<string>? Rarity { get; set; }
-
-    [JsonPropertyName("templates")]
-    public IEnumerable<object>? Templates { get; set; } // TODO: object here
-}
-
-public record EffectsHealth
-{
-    [JsonPropertyName("Energy")]
-    public EffectsHealthProperties? Energy { get; set; }
-
-    [JsonPropertyName("Hydration")]
-    public EffectsHealthProperties? Hydration { get; set; }
-}
-
 public record EffectsHealthProperties
 {
     [JsonPropertyName("value")]
@@ -1881,30 +1824,6 @@ public record EffectsHealthProperties
 
     [JsonPropertyName("duration")]
     public double? Duration { get; set; }
-}
-
-public record EffectsDamage
-{
-    [JsonPropertyName("Pain")]
-    public EffectsDamageProperties? Pain { get; set; }
-
-    [JsonPropertyName("LightBleeding")]
-    public EffectsDamageProperties? LightBleeding { get; set; }
-
-    [JsonPropertyName("HeavyBleeding")]
-    public EffectsDamageProperties? HeavyBleeding { get; set; }
-
-    [JsonPropertyName("Contusion")]
-    public EffectsDamageProperties? Contusion { get; set; }
-
-    [JsonPropertyName("RadExposure")]
-    public EffectsDamageProperties? RadExposure { get; set; }
-
-    [JsonPropertyName("Fracture")]
-    public EffectsDamageProperties? Fracture { get; set; }
-
-    [JsonPropertyName("DestroyedPart")]
-    public EffectsDamageProperties? DestroyedPart { get; set; }
 }
 
 public record EffectsDamageProperties
