@@ -129,7 +129,7 @@ public class FenceService(
                 traderConfig.Fence.DiscountOptions.ItemPriceMult,
                 traderConfig.Fence.DiscountOptions.PresetPriceMult
             );
-            var mergedAssorts = MergeAssorts(assort, discountAssort);
+            var mergedAssorts = assort.MergeAssorts(discountAssort);
 
             return mergedAssorts;
         }
@@ -227,33 +227,6 @@ public class FenceService(
     }
 
     /// <summary>
-    ///     Merge two trader assort files together
-    /// </summary>
-    /// <param name="firstAssort"> Assort #1 </param>
-    /// <param name="secondAssort"> Assort #2 </param>
-    /// <returns> Merged assort </returns>
-    // TODO: can be moved to a helper?
-    protected TraderAssort MergeAssorts(TraderAssort firstAssort, TraderAssort secondAssort)
-    {
-        foreach (var itemId in secondAssort.BarterScheme.Keys)
-        {
-            firstAssort.BarterScheme[itemId] = secondAssort.BarterScheme[itemId];
-        }
-
-        foreach (var item in secondAssort.Items)
-        {
-            firstAssort.Items.Add(item);
-        }
-
-        foreach (var itemId in secondAssort.LoyalLevelItems.Keys)
-        {
-            firstAssort.LoyalLevelItems[itemId] = secondAssort.LoyalLevelItems[itemId];
-        }
-
-        return firstAssort;
-    }
-
-    /// <summary>
     ///     Adjust assorts price by a modifier
     /// </summary>
     /// <param name="item"> Assort item details</param>
@@ -297,7 +270,7 @@ public class FenceService(
     /// <returns> TraderAssort </returns>
     public TraderAssort GetRawFenceAssorts()
     {
-        return MergeAssorts(_cloner.Clone(fenceAssort), _cloner.Clone(fenceDiscountAssort));
+        return _cloner.Clone(fenceAssort)?.MergeAssorts(_cloner.Clone(fenceDiscountAssort)!)!;
     }
 
     /// <summary>
