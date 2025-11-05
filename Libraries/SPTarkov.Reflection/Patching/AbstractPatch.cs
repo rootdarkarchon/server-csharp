@@ -138,7 +138,6 @@ public abstract class AbstractPatch : IRuntimePatch
                 _harmony!.Patch(TargetMethod, ilmanipulator: ilmanipulator);
             }
 
-            ModPatchCache.AddPatch(this);
             IsActive = true;
         }
         catch (Exception ex)
