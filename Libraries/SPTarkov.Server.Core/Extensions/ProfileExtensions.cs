@@ -332,8 +332,6 @@ public static class ProfileExtensions
     /// <returns>Hashset of Trader ids</returns>
     public static HashSet<MongoId> GetLockedTraderIds(this PmcData pmcData)
     {
-        return pmcData.TradersInfo?
-            .Where(trader => trader.Value.Unlocked == false)
-            .Select(t => t.Key).ToHashSet() ?? [];
+        return pmcData.TradersInfo?.Where(trader => trader.Value.Unlocked == false).Select(t => t.Key).ToHashSet() ?? [];
     }
 }
