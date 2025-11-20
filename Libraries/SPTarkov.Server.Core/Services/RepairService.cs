@@ -523,6 +523,11 @@ public class RepairService(
     {
         var globals = databaseService.GetGlobals();
 
+        if (pmcData.Info.Level < globals.Configuration.RepairSettings.MinimumLevelToApplyBuff)
+        {
+            return false;
+        }
+
         var hasTemplate = itemHelper.GetItem(repairDetails.RepairedItem.Template);
         if (!hasTemplate.Key)
         {
