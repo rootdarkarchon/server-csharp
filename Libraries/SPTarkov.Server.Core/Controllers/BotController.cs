@@ -294,7 +294,7 @@ public class BotController(
         }
         catch (Exception e)
         {
-            logger.Error($"Failed to generate bot #{botIndex + 1} ({generationDetails.Role}): {e.Message}");
+            logger.Critical($"Failed to generate bot #{botIndex + 1} ({generationDetails.Role}): {e.Message}", e);
             return null;
         }
     }
