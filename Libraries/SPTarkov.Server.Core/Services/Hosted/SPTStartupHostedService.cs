@@ -50,11 +50,11 @@ public sealed class SPTStartupHostedService(
 
                 // Convert bytes to GB
                 var totalMemoryGb = totalMemoryBytes / (1024.0 * 1024.0 * 1024.0);
-                var pageFileGb = Environment.SystemPageSize / (1024.0 * 1024.0 * 1024.0);
+                var pageFileGb = Environment.SystemPageSize / 1024.0;
 
                 logger.Debug($"OS: {Environment.OSVersion.Version} | {Environment.OSVersion.Platform}");
                 logger.Debug($"Pagefile: {pageFileGb:F2} GB");
-                if (pageFileGb <= 0)
+                if (pageFileGb <= 0 && Environment.OSVersion.Platform == PlatformID.Win32NT)
                 {
                     logger.Warning("Pagefile size is 0 GB, you may encounter out of memory errors when loading into raids");
                 }
