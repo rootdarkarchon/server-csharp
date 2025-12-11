@@ -270,7 +270,7 @@ public class BotEquipmentFilterService(
     /// <returns>Filtered bot file</returns>
     protected void FilterCartridges(BotType baseBotNode, EquipmentFilterDetails? blacklist, EquipmentFilterDetails? whitelist)
     {
-        if (whitelist is not null)
+        if (whitelist is not null && whitelist.Cartridge is not null)
         {
             // Loop over each caliber + cartridges of that type
             foreach (var (caliber, cartridges) in baseBotNode.BotInventory.Ammo)
