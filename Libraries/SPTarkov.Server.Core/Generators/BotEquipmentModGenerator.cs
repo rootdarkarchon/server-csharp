@@ -1826,7 +1826,8 @@ public class BotEquipmentModGenerator(
                                     || itemHelper.IsOfBaseclass(tpl, BaseClasses.MOUNT)
                                 )
                             )
-                    ) ?? false
+                    )
+                    ?? false
                 )
                 // Add mod to allowed list
                 {
