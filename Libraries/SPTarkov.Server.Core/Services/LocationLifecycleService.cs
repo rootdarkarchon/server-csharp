@@ -112,13 +112,25 @@ public class LocationLifecycleService(
         RagfairConfig.RunIntervalSeconds = RagfairConfig.RunIntervalValues.InRaid;
         HideoutConfig.RunIntervalSeconds = HideoutConfig.RunIntervalValues.InRaid;
 
+        var location = GenerateLocationAndLoot(sessionId, request.Location, !request.ShouldSkipLootGeneration ?? true);
+
+        foreach (var transits in location.Transits)
+        {
+            // Handle Runddans / Khorovod event
+            if (transitionType == TransitionType.EVENT && databaseService.GetGlobals().Configuration.RunddansSettings.Active)
+            {
+                transits.ActivateAfterSeconds = 300;
+                transits.Events = true;
+            }
+        }
+
         var result = new StartLocalRaidResponseData
         {
             // PVE_OFFLINE_xxxxxxxx_27_06_2025_20_20_44
             ServerId = $"{request.Location}.{request.PlayerSide} {timeUtil.GetTimeStamp()}", // Only used for metrics in client
             ServerSettings = databaseService.GetLocationServices(), // TODO - is this per map or global?
             Profile = new ProfileInsuredItems { InsuredItems = playerProfile.CharacterData.PmcData.InsuredItems },
-            LocationLoot = GenerateLocationAndLoot(sessionId, request.Location, !request.ShouldSkipLootGeneration ?? true),
+            LocationLoot = location,
             TransitionType = transitionType,
             Transition = new Transition
             {
