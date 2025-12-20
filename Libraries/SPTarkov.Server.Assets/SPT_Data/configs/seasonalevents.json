@@ -14001,11 +14001,23 @@
     }
   },
   "khorvodEventTransitWhitelist": {
-	  "shoreline": [24],
-	  "lighthouse": [22],
-	  "rezervbase": [19],
-	  "woods": [15],
-	  "factory4_day": [13],
-	  "bigmap": [11]
+    "shoreline": [
+      24
+    ],
+    "lighthouse": [
+      22
+    ],
+    "rezervbase": [
+      19
+    ],
+    "woods": [
+      15
+    ],
+    "factory4_day": [
+      13
+    ],
+    "bigmap": [
+      11
+    ]
   }
 }
