@@ -539,7 +539,7 @@ public class SeasonalEventService(
             }
 
             var matchingTransitWhitelist = SeasonalEventConfig.KhorvodEventTransitWhitelist.GetValueOrDefault(locationBase.Base.Id, null);
-            if (matchingTransitWhitelist is null )
+            if (matchingTransitWhitelist is null)
             {
                 continue;
             }
