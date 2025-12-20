@@ -14001,6 +14001,8 @@
     }
   },
   "khorvodEventTransitWhitelist": {
-	  "bigmap": [9]
+    "bigmap": [
+      9
+    ]
   }
 }
