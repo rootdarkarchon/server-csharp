@@ -545,7 +545,7 @@ public class SeasonalEventService(
             // Raise the chance on christmas related spawns ever so slightly
             if (location.Value.LooseLoot is not null)
             {
-                const double christmasLootBoost = 0.03;
+                var christmasLootBoost = eventType.Settings?.ChristmasLootBoostAmount ?? 0.03;
 
                 location.Value.LooseLoot.AddTransformer(looselootData =>
                 {

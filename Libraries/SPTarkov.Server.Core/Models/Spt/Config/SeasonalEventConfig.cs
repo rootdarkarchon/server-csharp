@@ -149,6 +149,9 @@ public record SeasonalEventSettings
 
     [JsonPropertyName("enableKhorvodEvent")]
     public bool? EnableKhorvodEvent { get; set; }
+
+    [JsonPropertyName("christmasLootBoostAmount")]
+    public double? ChristmasLootBoostAmount { get; set; }
 }
 
 public record ZombieSettings

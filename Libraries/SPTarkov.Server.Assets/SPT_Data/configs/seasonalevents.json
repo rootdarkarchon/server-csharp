@@ -9933,7 +9933,8 @@
         "enableChristmasHideout": true,
         "enableSanta": true,
         "enableRundansEvent": true,
-        "enableKhorvodEvent": true
+        "enableKhorvodEvent": true,
+        "christmasLootBoostAmount": 0.03
       },
       "startDay": "13",
       "startMonth": "12",
