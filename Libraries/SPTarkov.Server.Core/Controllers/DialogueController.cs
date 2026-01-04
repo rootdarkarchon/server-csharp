@@ -566,42 +566,51 @@ public class DialogueController(
             return;
         }
 
-        HashSet<SendMessageDetails> detailsList = new HashSet<SendMessageDetails>();
-
+        HashSet<SendMessageDetails> expiredInsuranceMessagesToSend = [];
         foreach (var message in dialog.Messages.Where(MessageHasExpired))
         {
             // Reset expired message items data
             message.Items = new();
 
             var traderDialogMessages = databaseService.GetTrader(dialogueId)?.Dialogue;
-            if (message?.Items?.Data?.Count <= 0 || message.TemplateId == null)
+            if (traderDialogMessages == null)
             {
                 continue;
             }
 
-            if (traderDialogMessages?.TryGetValue("insuranceFound", out var successMessageIds) != true ||
+            if (message?.TemplateId == null || message.Items.Data?.Count <= 0)
+            {
+                continue;
+            }
+
+            if (!traderDialogMessages.TryGetValue("insuranceFound", out var successMessageIds) ||
                 successMessageIds == null || !successMessageIds.Contains(message.TemplateId))
             {
                 continue;
             }
 
-            if (traderDialogMessages.TryGetValue("insuranceExpired", out var responseMessageIds) && responseMessageIds != null)
+            if (!traderDialogMessages.TryGetValue("insuranceExpired", out var responseMessageIds) || responseMessageIds == null)
             {
-                var responseMessageId = randomUtil.GetArrayValue(responseMessageIds);
-                detailsList.Add(new SendMessageDetails
-                {
-                    RecipientId = sessionId,
-                    Sender = MessageType.NpcTraderMessage,
-                    DialogType = MessageType.NpcTraderMessage,
-                    Trader = dialogueId,
-                    TemplateId = responseMessageId,
-                    Items = []
-                });
+                continue;
             }
+
+            // Choose random expired insurance message to send to player
+            var expiredInsuranceMessageId = randomUtil.GetArrayValue(responseMessageIds);
+            expiredInsuranceMessagesToSend.Add(new SendMessageDetails
+            {
+                RecipientId = sessionId,
+                Sender = MessageType.NpcTraderMessage,
+                DialogType = MessageType.NpcTraderMessage,
+                Trader = dialogueId,
+                TemplateId = expiredInsuranceMessageId,
+                Items = []
+            });
         }
-        if (detailsList.Count > 0)
+
+        if (expiredInsuranceMessagesToSend.Count > 0)
         {
-            foreach (var insuranceExpiredDialog in detailsList)
+            // We have expired insurance messages to send to player
+            foreach (var insuranceExpiredDialog in expiredInsuranceMessagesToSend)
             {
                 mailSendService.SendMessageToPlayer(insuranceExpiredDialog);
             }
