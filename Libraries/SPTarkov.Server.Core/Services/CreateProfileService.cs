@@ -177,7 +177,7 @@ public class CreateProfileService(
         // Process handling if the account is forced to prestige, or if the account currently has any pending prestiges
         if (request.SptForcePrestigeLevel is not null || account.SptData?.PendingPrestige is not null)
         {
-            var pendingPrestige = account.SptData.PendingPrestige ?? new PendingPrestige { PrestigeLevel = request.SptForcePrestigeLevel };
+            var pendingPrestige = account.SptData?.PendingPrestige ?? new PendingPrestige { PrestigeLevel = request.SptForcePrestigeLevel };
 
             prestigeHelper.ProcessPendingPrestige(account, profileDetails, pendingPrestige);
         }

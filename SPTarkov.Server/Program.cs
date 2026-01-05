@@ -64,6 +64,22 @@ public static class Program
         }
         catch (Exception e)
         {
+            if (
+                e.Message.Contains(
+                    "could not load file or assembly 'sptarkov.server.core, version=",
+                    StringComparison.InvariantCultureIgnoreCase
+                )
+            )
+            {
+                EarlyLogger!.LogCritical(
+                    e,
+                    "You may have installed a mod that needs a newer version of of SPT installed. Please try updating SPT"
+                );
+
+                Console.ReadLine();
+                return;
+            }
+
             if (e.Message.Contains("could not load file or assembly", StringComparison.InvariantCultureIgnoreCase))
             {
                 EarlyLogger!.LogCritical(
@@ -71,6 +87,7 @@ public static class Program
                     "You may have forgotten to install a requirement for one of your mods, please check the mod page again and install any requirements listed. Read the error message below CAREFULLY for the name of the mod you need to install"
                 );
 
+                Console.ReadLine();
                 // Don't show below error message when it's a mod exception.
                 return;
             }

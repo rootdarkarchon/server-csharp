@@ -62,6 +62,7 @@
   "chat-unable_to_register_command_already_registered": "Nie można zarejestrować już zarejestrowanej komendy: %s",
   "client_request": "[Żądanie klienta] %s",
   "client_request_ip": "[Żądanie klienta] {{ip}} {{url}}",
+  "websocket_request_ip": "[Żądanie WebSocket] {{ip}} {{url}}",
   "customisation-item_already_purchased": "Element ubioru {{itemId}} {{itemName}} został już zakupiony",
   "customisation-suit_lacks_upd_or_stack_property": "Stroju z tpl: %s brakuje obiektu upd lub właściwości stackobjectcount",
   "customisation-unable_to_find_clothing_item_in_inventory": "Przedmiot ubioru nie został znaleziony w ekwipunku z id: %s",
