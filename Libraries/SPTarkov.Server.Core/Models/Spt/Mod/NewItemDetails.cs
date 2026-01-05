@@ -7,7 +7,7 @@ namespace SPTarkov.Server.Core.Models.Spt.Mod;
 public record NewItemDetails : NewItemDetailsBase
 {
     [JsonPropertyName("newItem")]
-    public TemplateItem? NewItem { get; set; }
+    public required TemplateItem NewItem { get; set; }
 }
 
 public record NewItemFromCloneDetails : NewItemDetailsBase
@@ -54,7 +54,7 @@ public record NewItemDetailsBase
     public string? HandbookParentId { get; set; }
 
     [JsonPropertyName("locales")]
-    public Dictionary<string, LocaleDetails>? Locales { get; set; }
+    public required Dictionary<string, LocaleDetails> Locales { get; set; } = [];
 }
 
 public record LocaleDetails
@@ -78,13 +78,11 @@ public record CreateItemResult
     }
 
     [JsonPropertyName("success")]
-    public bool? Success { get; set; }
+    public required bool Success { get; set; }
 
     [JsonPropertyName("itemId")]
-    public MongoId? ItemId { get; set; }
+    public required MongoId ItemId { get; set; }
 
     [JsonPropertyName("errors")]
-    public List<string>? Errors { get; set; }
+    public required List<string> Errors { get; set; } = [];
 }
-
-// TODO: This needs to be reworked with however we do it for this project

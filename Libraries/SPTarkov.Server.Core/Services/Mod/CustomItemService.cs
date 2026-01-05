@@ -32,7 +32,6 @@ public class CustomItemService(
     /// <returns> tplId of the new item created </returns>
     public CreateItemResult CreateItemFromClone(NewItemFromCloneDetails newItemDetails)
     {
-        var result = new CreateItemResult();
         var tables = databaseService.GetTables();
 
         // Generate new id for item if none supplied
@@ -41,11 +40,12 @@ public class CustomItemService(
         // Fail if itemId already exists
         if (tables.Templates.Items.TryGetValue(newItemId, out var item))
         {
-            result.Errors.Add($"ItemId already exists. {item.Name}");
-            result.Success = false;
-            result.ItemId = newItemId;
-
-            return result;
+            return new CreateItemResult
+            {
+                ItemId = newItemId,
+                Errors = [$"ItemId already exists. {item.Name}"],
+                Success = false,
+            };
         }
 
         // Clone existing item
@@ -76,10 +76,12 @@ public class CustomItemService(
 
         modItemCacheService.AddModItem(Assembly.GetCallingAssembly(), newItemId);
 
-        result.Success = true;
-        result.ItemId = newItemId;
-
-        return result;
+        return new CreateItemResult
+        {
+            Errors = [],
+            Success = true,
+            ItemId = newItemId,
+        };
     }
 
     /// <summary>
@@ -93,7 +95,6 @@ public class CustomItemService(
     /// <returns> CreateItemResult containing the completed items ID </returns>
     public CreateItemResult CreateItem(NewItemDetails newItemDetails)
     {
-        var result = new CreateItemResult();
         var tables = databaseService.GetTables();
 
         var newItem = newItemDetails.NewItem;
@@ -101,8 +102,12 @@ public class CustomItemService(
         // Fail if itemId already exists
         if (tables.Templates.Items.TryGetValue(newItem.Id, out var item))
         {
-            result.Errors.Add($"ItemId already exists. {item.Name}");
-            return result;
+            return new CreateItemResult
+            {
+                ItemId = newItem.Id,
+                Errors = [$"ItemId already exists. {item.Name}"],
+                Success = false,
+            };
         }
 
         AddToItemsDb(newItem.Id, newItem);
@@ -122,10 +127,12 @@ public class CustomItemService(
 
         modItemCacheService.AddModItem(Assembly.GetCallingAssembly(), newItem.Id);
 
-        result.ItemId = newItemDetails.NewItem.Id;
-        result.Success = true;
-
-        return result;
+        return new CreateItemResult
+        {
+            Errors = [],
+            Success = true,
+            ItemId = newItemDetails.NewItem.Id,
+        };
     }
 
     /// <summary>
