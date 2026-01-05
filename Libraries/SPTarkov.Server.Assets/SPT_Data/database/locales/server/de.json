@@ -57,6 +57,7 @@
   "bot-weapon_missing_mod_slot": "Slot: '{{modSlot}}' existiert nicht für Waffe: {{weaponId}} {{weaponName}} auf {{botRole}}",
   "bot-weapons_required_slot_missing_item": "Erforderlicher Slot '{{modSlot}}' auf {{modName}} {{slotId}} war leer auf {{botRole}}",
   "build-unable_to_delete_preset": "Voreinstellung kann nicht gelöscht werden, %s kann nicht in Waffen, Ausrüstung oder Magazinvorlagen gefunden werden",
+  "cultistcircle-unable_to_find_stash_id": "Keine ID für den Kultist Kreis im Inventar gefunden [HideoutBereichInventare]! Es wurden keine Belohnungen generiert",
   "chat-unable_to_register_command_already_registered": "Bereits registrierter Befehl konnte nicht registriert werden: %s",
   "client_request": "[Client-Anfrage] %s",
   "client_request_ip": "[Client-Anfrage] {{ip}} {{url}}",

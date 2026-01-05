@@ -42,36 +42,52 @@ public static class Program
         }
         catch (Exception e)
         {
-            if (e.Message.Contains("could not load file or assembly", StringComparison.InvariantCultureIgnoreCase))
+            if (
+                e.Message.Contains(
+                    "could not load file or assembly 'sptarkov.server.core, version=",
+                    StringComparison.InvariantCultureIgnoreCase
+                )
+            )
             {
-                Console.WriteLine(
-                    "========================================================================================================="
-                );
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.ForegroundColor = ConsoleColor.Black;
-                Console.WriteLine(
-                    "You may have forgotten to install a requirement for one of your mods, please check the mod page again and install any dependencies listed. Read the below error message CAREFULLY to find the name of the mod you need to install"
-                );
-
-                Console.ResetColor();
-                Console.WriteLine(e);
-                Console.WriteLine(
-                    "========================================================================================================="
+                ShowRedConsoleMessage(
+                    e,
+                    "You may have installed a mod that needs a newer version of of SPT installed. Please try updating SPT"
                 );
 
                 Console.ReadLine();
                 return;
             }
 
-            Console.WriteLine("=========================================================================================================");
-            Console.WriteLine(
+            if (e.Message.Contains("could not load file or assembly", StringComparison.InvariantCultureIgnoreCase))
+            {
+                ShowRedConsoleMessage(
+                    e,
+                    "You may have forgotten to install a requirement for one of your mods, please check the mod page again and install any dependencies listed. Read the below error message CAREFULLY to find the name of the mod you need to install"
+                );
+
+                Console.ReadLine();
+                return;
+            }
+
+            ShowRedConsoleMessage(
+                e,
                 "The server has unexpectedly stopped, reach out to #spt-support in our Discord server. Include a screenshot of this message + the below error"
             );
-            Console.WriteLine(e);
-            Console.WriteLine("=========================================================================================================");
             Console.WriteLine("Press any key to exit...");
             Console.ReadLine();
         }
+    }
+
+    private static void ShowRedConsoleMessage(Exception e, string message)
+    {
+        Console.WriteLine("=========================================================================================================");
+        Console.BackgroundColor = ConsoleColor.DarkRed;
+        Console.ForegroundColor = ConsoleColor.Black;
+        Console.WriteLine(message);
+
+        Console.ResetColor();
+        Console.WriteLine(e);
+        Console.WriteLine("=========================================================================================================");
     }
 
     public static async Task StartServer(string[] args)
