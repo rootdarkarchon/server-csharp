@@ -129,16 +129,6 @@ public class CustomItemService(
     }
 
     /// <summary>
-    ///     If the ID provided is an empty string, return a randomly generated guid, otherwise return the newId parameter
-    /// </summary>
-    /// <param name="newId"> ID supplied to code </param>
-    /// <returns> ItemID </returns>
-    protected MongoId GetOrGenerateIdForItem(string? newId)
-    {
-        return string.IsNullOrEmpty(newId) ? new MongoId() : new MongoId(newId);
-    }
-
-    /// <summary>
     ///     Iterates through supplied properties and updates the cloned items properties with them
     /// </summary>
     /// <param name="overrideProperties"> New properties to apply </param>
