@@ -92,8 +92,9 @@ public class CustomItemService(
     ///     Add to the locales <br />
     /// </summary>
     /// <param name="newItemDetails"> Details on what the item to be created </param>
+    /// <param name="callingAssembly"> The ability to assign another calling assembly, mostly useful for libraries </param>
     /// <returns> CreateItemResult containing the completed items ID </returns>
-    public CreateItemResult CreateItem(NewItemDetails newItemDetails)
+    public CreateItemResult CreateItem(NewItemDetails newItemDetails, Assembly? callingAssembly = null)
     {
         var tables = databaseService.GetTables();
 
@@ -125,7 +126,14 @@ public class CustomItemService(
             AddToWeaponShelf(newItem.Id);
         }
 
-        modItemCacheService.AddModItem(Assembly.GetCallingAssembly(), newItem.Id);
+        if (callingAssembly is not null)
+        {
+            modItemCacheService.AddModItem(callingAssembly, newItem.Id);
+        }
+        else
+        {
+            modItemCacheService.AddModItem(Assembly.GetCallingAssembly(), newItem.Id);
+        }
 
         return new CreateItemResult
         {
