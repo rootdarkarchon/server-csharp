@@ -113,7 +113,13 @@ public class BotWeaponModLimitService(ISptLogger<BotWeaponModLimitService> logge
         var modIsLightOrLaser = itemHelper.IsOfBaseclasses(modTemplate.Id, modLimits.FlashlightLaserBaseTypes);
         if (modIsLightOrLaser)
         {
-            return WeaponModLimitReached(modTemplate.Id, modLimits.FlashlightLaser, modLimits.FlashlightLaserMax ?? 0, botRole, "light/laser");
+            return WeaponModLimitReached(
+                modTemplate.Id,
+                modLimits.FlashlightLaser,
+                modLimits.FlashlightLaserMax ?? 0,
+                botRole,
+                "light/laser"
+            );
         }
 
         // Mod is a mount that can hold only flashlights ad limit is reached (don't want to add empty mounts if limit is reached)
