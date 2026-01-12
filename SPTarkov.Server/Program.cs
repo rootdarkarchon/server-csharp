@@ -94,8 +94,10 @@ public static class Program
 
             EarlyLogger!.LogCritical(
                 e,
-                "The server has unexpectedly stopped, Join SPT's Discord server and see the #support-guidelines on how to make a support thread."
+                "The server has unexpectedly stopped, reach out to #mod-questions-4-0 in our Discord server. Include a screenshot of this message and the surrounding error(s) above and below"
             );
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadLine();
         }
         finally
         {

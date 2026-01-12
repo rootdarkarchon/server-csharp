@@ -684,6 +684,9 @@ public class ProfileHelper(
             case CustomisationTypeId.UPPER:
                 rewardToStore.Type = CustomisationType.UPPER;
                 break;
+            case CustomisationTypeId.HEAD:
+                rewardToStore.Type = CustomisationType.HEAD;
+                break;
             default:
                 logger.Error($"Unhandled customisation unlock type: {template.Parent} not added to profile");
                 return;

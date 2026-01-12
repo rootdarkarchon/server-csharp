@@ -111,7 +111,13 @@ public class BotWeaponModLimitService(ISptLogger<BotWeaponModLimitService> logge
         var modIsLightOrLaser = itemHelper.IsOfBaseclasses(modTemplate.Id, modLimits.FlashlightLaserBaseTypes);
         if (modIsLightOrLaser)
         {
-            return WeaponModLimitReached(modTemplate.Id, modLimits.FlashlightLaser, modLimits.FlashlightLaserMax ?? 0, botRole);
+            return WeaponModLimitReached(
+                modTemplate.Id,
+                modLimits.FlashlightLaser,
+                modLimits.FlashlightLaserMax ?? 0,
+                botRole,
+                "light/laser"
+            );
         }
 
         // Mod is a mount that can hold only flashlights ad limit is reached (don't want to add empty mounts if limit is reached)
@@ -135,10 +141,11 @@ public class BotWeaponModLimitService(ISptLogger<BotWeaponModLimitService> logge
     /// <param name="currentCount">current number of this item on gun</param>
     /// <param name="maxLimit">mod limit allowed</param>
     /// <param name="botRole">role of bot we're checking weapon of</param>
+    /// <param name="modType">OPTIONAL: Type of mod, scope or lightlaser</param>
     /// <returns>true if limit reached</returns>
-    protected bool WeaponModLimitReached(MongoId modTpl, ItemCount currentCount, int? maxLimit, string botRole)
+    protected bool WeaponModLimitReached(MongoId modTpl, ItemCount currentCount, int? maxLimit, string botRole, string modType = "scope")
     {
-        // No limit
+        // No limit, ignore
         if (maxLimit is null or 0)
         {
             return false;
@@ -149,13 +156,13 @@ public class BotWeaponModLimitService(ISptLogger<BotWeaponModLimitService> logge
         {
             if (logger.IsLogEnabled(LogLevel.Debug))
             {
-                logger.Debug($"[{botRole}] scope limit reached! tried to add {modTpl} but scope count is {currentCount.Count}");
+                logger.Debug($"[{botRole}] {modType} limit reached! tried to add: {modTpl} but {modType} count is: {currentCount.Count}");
             }
 
             return true;
         }
 
-        // Increment scope count
+        // Increment mod count limit
         currentCount.Count++;
 
         return false;
