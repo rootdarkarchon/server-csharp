@@ -299,7 +299,7 @@
     }
   },
   "features": {
-    "compressProfile": false,
+    "compressProfile": true,
     "chatbotFeatures": {
       "sptFriendGiftsEnabled": true,
       "commandoFeatures": {
