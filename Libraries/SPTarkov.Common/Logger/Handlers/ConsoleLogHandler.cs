@@ -19,9 +19,11 @@ internal sealed class ConsoleLogHandler : BaseLogHandler
 
     private string GetColorizedText(string data, Color? textColor = null, Color? backgroundColor = null)
     {
+        var escapedMarkup = Markup.Escape(data);
+
         if (textColor == null && backgroundColor == null)
         {
-            return data.EscapeMarkup();
+            return escapedMarkup;
         }
 
         var style = new Style(
@@ -29,6 +31,6 @@ internal sealed class ConsoleLogHandler : BaseLogHandler
             background: backgroundColor != null ? backgroundColor : Color.Default
         );
 
-        return $"[{style.ToMarkup()}]{data.EscapeMarkup()}[/]";
+        return $"[{style.ToMarkup()}]{escapedMarkup}[/]";
     }
 }
