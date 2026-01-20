@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\Build.props" />
   <PropertyGroup>
     <PackageId>SPTarkov.Reflection</PackageId>
@@ -18,7 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HarmonyX" Version="2.16.0" />
-    <PackageReference Include="JetBrains.Annotations" Version="2025.2.2" />
+    <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SPTarkov.DI\SPTarkov.DI.csproj" />

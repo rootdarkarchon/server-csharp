@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\Build.props" />
   <PropertyGroup>
     <PackageId>SPTarkov.Server.Core</PackageId>
@@ -20,8 +20,8 @@
     <ProjectReference Include="..\SPTarkov.DI\SPTarkov.DI.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.IO.Hashing" Version="10.0.0" />
-    <PackageReference Include="FastCloner" Version="3.3.17" />
+    <PackageReference Include="System.IO.Hashing" Version="10.0.2" />
+    <PackageReference Include="FastCloner" Version="3.4.3" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE" Pack="true" Visible="false" PackagePath="" />
