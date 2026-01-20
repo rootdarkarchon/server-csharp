@@ -18,6 +18,8 @@
     <!-- Has to be enabled for SPTarkov.Server.Web to function properly-->
     <StaticWebAssetsEnabled>true</StaticWebAssetsEnabled>
     <StaticWebAssetBasePath>..\SPT_Data\wwwroot\</StaticWebAssetBasePath>
+    <!-- Required for .Net 10 to provide the web assets for Blazor-->
+    <RequiresAspNetWebAssets>true</RequiresAspNetWebAssets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'win-x64'">
     <ApplicationIcon>..\Libraries\SPTarkov.Server.Assets\SPT_Data\images\icon.ico</ApplicationIcon>
