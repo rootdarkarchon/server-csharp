@@ -780,13 +780,11 @@ public record SpawnPointParam
 
 public record ColliderParams
 {
-    private string? _parent;
-
     [JsonPropertyName("_parent")]
     public string? Parent
     {
-        get { return _parent; }
-        set { _parent = string.Intern(value); }
+        get { return field; }
+        set { field = string.Intern(value); }
     }
 
     [JsonPropertyName("_props")]

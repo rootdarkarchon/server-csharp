@@ -110,16 +110,14 @@ public record OfferRequirement
 
 public record RagfairOfferUser
 {
-    private string? _nickname;
-
     [JsonPropertyName("id")]
     public MongoId Id { get; set; }
 
     [JsonPropertyName("nickname")]
     public string? Nickname
     {
-        get { return _nickname; }
-        set { _nickname = value == null ? null : string.Intern(value); }
+        get { return field; }
+        set { field = value == null ? null : string.Intern(value); }
     }
 
     [JsonPropertyName("rating")]

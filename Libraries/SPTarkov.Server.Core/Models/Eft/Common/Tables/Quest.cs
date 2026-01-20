@@ -172,8 +172,6 @@ public record QuestConditionTypes
 
 public record QuestCondition
 {
-    private string _conditionType;
-
     [JsonPropertyName("id")]
     public required MongoId Id { get; set; }
 
@@ -270,8 +268,8 @@ public record QuestCondition
     [JsonPropertyName("conditionType")]
     public required string ConditionType
     {
-        get { return _conditionType; }
-        set { _conditionType = string.Intern(value); }
+        get { return field; }
+        set { field = string.Intern(value); }
     }
 
     [JsonPropertyName("epicGamesId")]

@@ -26,8 +26,6 @@ public record SpawnpointCount
 
 public record SpawnpointTemplate
 {
-    private string? _root;
-
     /// <summary>
     /// Not a mongoId
     /// </summary>
@@ -61,8 +59,8 @@ public record SpawnpointTemplate
     [JsonPropertyName("Root")]
     public string? Root
     {
-        get { return _root; }
-        set { _root = value == null ? null : string.Intern(value); }
+        get { return field; }
+        set { field = value == null ? null : string.Intern(value); }
     }
 
     [JsonPropertyName("Items")]
@@ -77,13 +75,11 @@ public record SptLootItem : Item
 
 public record GroupPosition
 {
-    private string? _name;
-
     [JsonPropertyName("Name")]
     public string? Name
     {
-        get { return _name; }
-        set { _name = value == null ? null : string.Intern(value); }
+        get { return field; }
+        set { field = value == null ? null : string.Intern(value); }
     }
 
     [JsonPropertyName("Weight")]
@@ -122,12 +118,10 @@ public record LooseLootItemDistribution
 
 public record ComposedKey
 {
-    private string? _key;
-
     [JsonPropertyName("key")]
     public string? Key
     {
-        get { return _key; }
-        set { _key = string.Intern(value); }
+        get { return field; }
+        set { field = string.Intern(value); }
     }
 }

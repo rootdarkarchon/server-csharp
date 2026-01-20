@@ -11,20 +11,14 @@ public record TemplateItem
 {
     private Dictionary<string, bool>? _blocks;
 
-    private string? _name;
-
-    private string? _prototype;
-
-    private string? _type;
-
     [JsonPropertyName("_id")]
     public MongoId Id { get; set; }
 
     [JsonPropertyName("_name")]
     public string? Name
     {
-        get { return _name; }
-        set { _name = string.Intern(value); }
+        get { return field; }
+        set { field = string.Intern(value); }
     }
 
     [JsonPropertyName("_parent")]
@@ -33,8 +27,8 @@ public record TemplateItem
     [JsonPropertyName("_type")]
     public string? Type
     {
-        get { return _type; }
-        set { _type = value != null ? string.Intern(value) : null; }
+        get { return field; }
+        set { field = value != null ? string.Intern(value) : null; }
     }
 
     [JsonPropertyName("_props")]
@@ -43,8 +37,8 @@ public record TemplateItem
     [JsonPropertyName("_proto")]
     public string? Prototype
     {
-        get { return _prototype; }
-        set { _prototype = string.Intern(value); }
+        get { return field; }
+        set { field = string.Intern(value); }
     }
 
     /// <summary>
@@ -71,15 +65,6 @@ public record TemplateItem
 
 public record TemplateItemProperties
 {
-    private string? _backgroundColor;
-
-    private string? _itemSound;
-    private string? _metascoreGroup;
-
-    private string? _rarityPvE;
-
-    private string? _unlootableFromSlot;
-
     [JsonPropertyName("AllowSpawnOnLocations")]
     public IEnumerable<string>? AllowSpawnOnLocations { get; set; }
 
@@ -116,8 +101,8 @@ public record TemplateItemProperties
     [JsonPropertyName("BackgroundColor")]
     public string? BackgroundColor
     {
-        get { return _backgroundColor; }
-        set { _backgroundColor = string.Intern(value); }
+        get { return field; }
+        set { field = string.Intern(value); }
     }
 
     // Type confirmed via client
@@ -145,8 +130,8 @@ public record TemplateItemProperties
     [JsonPropertyName("ItemSound")]
     public string? ItemSound
     {
-        get { return _itemSound; }
-        set { _itemSound = string.Intern(value); }
+        get { return field; }
+        set { field = string.Intern(value); }
     }
 
     [JsonPropertyName("LeftHandItem")]
@@ -270,8 +255,8 @@ public record TemplateItemProperties
     [JsonPropertyName("MetascoreGroup")]
     public string? MetascoreGroup
     {
-        get { return _metascoreGroup; }
-        set { _metascoreGroup = value == null ? null : string.Intern(value); }
+        get { return field; }
+        set { field = value == null ? null : string.Intern(value); }
     }
 
     [JsonPropertyName("NpcCompressorSendLevel")]
@@ -307,8 +292,8 @@ public record TemplateItemProperties
     [JsonPropertyName("UnlootableFromSlot")]
     public string? UnlootableFromSlot
     {
-        get { return _unlootableFromSlot; }
-        set { _unlootableFromSlot = value == null ? null : string.Intern(value); }
+        get { return field; }
+        set { field = value == null ? null : string.Intern(value); }
     }
 
     [JsonPropertyName("UnlootableFromSide")]
@@ -331,8 +316,8 @@ public record TemplateItemProperties
     [JsonPropertyName("RarityPvE")]
     public string? RarityPvE
     {
-        get { return _rarityPvE; }
-        set { _rarityPvE = value == null ? null : string.Intern(value); }
+        get { return field; }
+        set { field = value == null ? null : string.Intern(value); }
     }
 
     [JsonPropertyName("IsAlwaysAvailableForInsurance")]
@@ -1709,15 +1694,11 @@ public record GridFilter
 
 public record Slot
 {
-    private string? _name;
-
-    private string? _prototype;
-
     [JsonPropertyName("_name")]
     public string? Name
     {
-        get { return _name; }
-        set { _name = value == null ? null : string.Intern(value); }
+        get { return field; }
+        set { field = value == null ? null : string.Intern(value); }
     }
 
     [JsonPropertyName("_id")]
@@ -1741,8 +1722,8 @@ public record Slot
     [JsonPropertyName("_proto")]
     public string? Prototype
     {
-        get { return _prototype; }
-        set { _prototype = value == null ? null : string.Intern(value); }
+        get { return field; }
+        set { field = value == null ? null : string.Intern(value); }
     }
 }
 
