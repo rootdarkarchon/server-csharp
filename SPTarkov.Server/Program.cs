@@ -15,8 +15,8 @@ using SPTarkov.Common.Models.Logging;
 using SPTarkov.Common.Semver;
 using SPTarkov.Common.Semver.Implementations;
 using SPTarkov.DI;
+using SPTarkov.Reflection.Patching;
 using SPTarkov.Server.Config;
-//using SPTarkov.Reflection.Patching;
 using SPTarkov.Server.Core.Helpers;
 using SPTarkov.Server.Core.Loaders;
 using SPTarkov.Server.Core.Models.Enums;
@@ -126,8 +126,7 @@ public static class Program
         // register SPT components
         diHandler.AddInjectableTypesFromTypeAssembly(typeof(Program));
         diHandler.AddInjectableTypesFromTypeAssembly(typeof(SPTStartupHostedService));
-        // TODO: Re-enable when HarmonyX is updated
-        //diHandler.AddInjectableTypesFromTypeAssembly(typeof(PatchManager));
+        diHandler.AddInjectableTypesFromTypeAssembly(typeof(PatchManager));
 
         List<SptMod> loadedMods = [];
         if (ProgramStatics.MODS())
