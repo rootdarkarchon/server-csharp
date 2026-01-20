@@ -278,13 +278,4 @@ public static class Program
         // This file is guaranteed to exist if ran from the correct location, even if the game does not exist here.
         return dirFiles.Any(dirFile => dirFile.EndsWith("sptLogger.json") || dirFile.EndsWith("sptLogger.Development.json"));
     }
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    private static extern IntPtr GetStdHandle(int nStdHandle);
-
-    [DllImport("kernel32.dll")]
-    private static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
-
-    [DllImport("kernel32.dll")]
-    private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
 }
