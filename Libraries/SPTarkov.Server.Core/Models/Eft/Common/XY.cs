@@ -5,8 +5,8 @@ namespace SPTarkov.Server.Core.Models.Eft.Common;
 public struct XY
 {
     [JsonPropertyName("x")]
-    public float X { get; set; }
+    public required float X { get; set; }
 
     [JsonPropertyName("y")]
-    public float Y { get; set; }
+    public required float Y { get; set; }
 }
