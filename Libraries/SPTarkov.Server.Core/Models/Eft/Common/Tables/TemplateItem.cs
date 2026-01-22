@@ -1702,10 +1702,10 @@ public record Slot
     }
 
     [JsonPropertyName("_id")]
-    public string? Id { get; set; }
+    public MongoId? Id { get; set; }
 
     [JsonPropertyName("_parent")]
-    public string? Parent { get; set; }
+    public MongoId? Parent { get; set; }
 
     [JsonPropertyName("_props")]
     public SlotProperties? Properties { get; set; }

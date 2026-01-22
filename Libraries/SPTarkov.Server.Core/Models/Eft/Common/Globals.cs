@@ -4270,6 +4270,7 @@ public record Inertia
     [JsonPropertyName("MaxMovementAccelerationRangeRight")]
     public XYZ MaxMovementAccelerationRangeRight { get; set; }
 
+    [JsonPropertyName("CrouchSpeedAccelerationRange")]
     public XYZ CrouchSpeedAccelerationRange { get; set; }
 }
 
