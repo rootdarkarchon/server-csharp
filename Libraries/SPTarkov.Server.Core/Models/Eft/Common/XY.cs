@@ -2,11 +2,11 @@ using System.Text.Json.Serialization;
 
 namespace SPTarkov.Server.Core.Models.Eft.Common;
 
-public record XY
+public struct XY
 {
     [JsonPropertyName("x")]
-    public double? X { get; set; }
+    public float X { get; set; }
 
     [JsonPropertyName("y")]
-    public double? Y { get; set; }
+    public float Y { get; set; }
 }
