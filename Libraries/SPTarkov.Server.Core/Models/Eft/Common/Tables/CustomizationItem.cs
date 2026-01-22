@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Text.Json.Serialization;
 using SPTarkov.Server.Core.Models.Common;
 
@@ -33,10 +34,10 @@ public class CustomizationProperties
     public Prefab? WatchPrefab { get; set; }
 
     [JsonPropertyName("WatchRotation")]
-    public XYZ? WatchRotation { get; set; }
+    public Vector3? WatchRotation { get; set; }
 
     [JsonPropertyName("WatchPosition")]
-    public XYZ? WatchPosition { get; set; }
+    public Vector3? WatchPosition { get; set; }
 
     [JsonPropertyName("IntegratedArmorVest")]
     public bool? IntegratedArmorVest { get; set; }

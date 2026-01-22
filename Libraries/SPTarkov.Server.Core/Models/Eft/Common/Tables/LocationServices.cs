@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Text.Json.Serialization;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Enums;
@@ -101,7 +102,7 @@ public record BtrServerSettings
     public double ChanceSpawn { get; set; }
 
     [JsonPropertyName("SpawnPeriod")]
-    public XYZ SpawnPeriod { get; set; }
+    public Vector3 SpawnPeriod { get; set; }
 
     [JsonPropertyName("MoveSpeed")]
     public float MoveSpeed { get; set; }
@@ -128,7 +129,7 @@ public record BtrServerSettings
     public double DecelerationSpeed { get; set; }
 
     [JsonPropertyName("PauseDurationRange")]
-    public XYZ PauseDurationRange { get; set; }
+    public Vector3 PauseDurationRange { get; set; }
 
     [JsonPropertyName("BodySwingReturnSpeed")]
     public float BodySwingReturnSpeed { get; set; }
@@ -152,7 +153,7 @@ public record ServerMapBtrsettings
     public double ChanceSpawn { get; set; }
 
     [JsonPropertyName("SpawnPeriod")]
-    public XYZ SpawnPeriod { get; set; }
+    public Vector3 SpawnPeriod { get; set; }
 
     [JsonPropertyName("MoveSpeed")]
     public float MoveSpeed { get; set; }
@@ -179,7 +180,7 @@ public record ServerMapBtrsettings
     public float DecelerationSpeed { get; set; }
 
     [JsonPropertyName("PauseDurationRange")]
-    public XYZ PauseDurationRange { get; set; }
+    public Vector3 PauseDurationRange { get; set; }
 
     [JsonPropertyName("BodySwingReturnSpeed")]
     public float BodySwingReturnSpeed { get; set; }
