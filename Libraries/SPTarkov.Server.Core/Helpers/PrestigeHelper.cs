@@ -200,6 +200,7 @@ public class PrestigeHelper(
                             newProfile.CharacterData!.PmcData!,
                             result,
                             reward.Value.GetValueOrDefault(0),
+                            useSkillProgressRateMultiplier: false,
                             adjustSkillExpForLowLevels: false
                         );
                     }

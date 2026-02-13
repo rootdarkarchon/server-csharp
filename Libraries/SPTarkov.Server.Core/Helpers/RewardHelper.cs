@@ -78,6 +78,7 @@ public class RewardHelper(
                         profileData,
                         Enum.Parse<SkillTypes>(reward.Target),
                         reward.Value.GetValueOrDefault(0),
+                        useSkillProgressRateMultiplier: false,
                         adjustSkillExpForLowLevels: false
                     );
                     break;
