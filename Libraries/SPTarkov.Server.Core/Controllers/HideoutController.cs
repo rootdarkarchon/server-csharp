@@ -823,7 +823,7 @@ public class HideoutController(
         }
 
         // Variables for management of skill
-        var craftingExpAmount = 0;
+        double craftingExpAmount = 0;
         var counterHoursCrafting = GetCustomSptHoursCraftingTaskConditionCounter(pmcData, recipe);
         var totalCraftingHours = counterHoursCrafting.Value;
 
@@ -866,17 +866,17 @@ public class HideoutController(
         if (area is not null && request.RecipeId != area.LastRecipe)
         // 1 point per craft upon the end of production for alternating between 2 different crafting recipes in the same module
         {
-            craftingExpAmount += HideoutConfig.ExpCraftAmount; // Default is 10
+            craftingExpAmount += HideoutConfig.CraftingExpAmount; // Default is 12.5, scaled (at 0.4 scale => 5 points per alternating craft)
         }
 
         // Update variable with time spent crafting item(s)
-        // 1 point per 8 hours of crafting
+        // 1.5 (3.75 w/ applying default 0.4 scale) points per 8 hours of crafting
         totalCraftingHours += recipe.ProductionTime;
         if (totalCraftingHours / HideoutConfig.HoursForSkillCrafting >= 1)
         {
             // Spent enough time crafting to get a bonus xp multiplier
             var multiplierCrafting = Math.Floor(totalCraftingHours.Value / HideoutConfig.HoursForSkillCrafting);
-            craftingExpAmount += (int)(1 * multiplierCrafting);
+            craftingExpAmount += (HideoutConfig.CraftingExpForHoursOfCrafting * multiplierCrafting);
             totalCraftingHours -= HideoutConfig.HoursForSkillCrafting * multiplierCrafting;
         }
 
@@ -944,7 +944,7 @@ public class HideoutController(
         // Add Crafting skill to player profile
         if (craftingExpAmount > 0)
         {
-            profileHelper.AddSkillPointsToPlayer(pmcData, SkillTypes.Crafting, craftingExpAmount);
+            profileHelper.AddSkillPointsToPlayer(pmcData, SkillTypes.Crafting, craftingExpAmount, true);
 
             var intellectAmountToGive = 0.5 * Math.Round((double)(craftingExpAmount / 15));
             if (intellectAmountToGive > 0)
