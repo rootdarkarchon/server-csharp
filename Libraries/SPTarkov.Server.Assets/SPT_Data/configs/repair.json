@@ -11,7 +11,7 @@
     "critSuccessAmount": 4,
     "critFailureChance": 0.1,
     "critFailureAmount": 4,
-    "pointGainMultiplier": 0.6
+    "pointGainMultiplier": 0.1
   },
   "repairKit": {
     "armor": {
