@@ -188,7 +188,7 @@ public class RepairService(
             var pointsToAddToVestSkill = repairDetails.RepairPoints * RepairConfig.ArmorKitSkillPointGainPerRepairPointMultiplier;
 
             logger.Debug($"Added: {pointsToAddToVestSkill} {vestSkillToLevel} skill");
-            profileHelper.AddSkillPointsToPlayer(pmcData, vestSkillToLevel, pointsToAddToVestSkill.GetValueOrDefault(0));
+            profileHelper.AddSkillPointsToPlayer(pmcData, vestSkillToLevel, pointsToAddToVestSkill.GetValueOrDefault(0), true);
         }
 
         // Handle trader repair - gives charisma based on (repair cost/10 * skill progress rate)
