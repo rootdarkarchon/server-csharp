@@ -519,7 +519,9 @@ public class ProfileHelper(
             pointsToAddToSkill *= multiplier;
         }
 
-        var adjustedSkillProgress = adjustSkillExpForLowLevels ? AdjustSkillExpForLowLevels(profileSkill.Progress, pointsToAddToSkill) : pointsToAddToSkill;
+        var adjustedSkillProgress = adjustSkillExpForLowLevels
+            ? AdjustSkillExpForLowLevels(profileSkill.Progress, pointsToAddToSkill)
+            : pointsToAddToSkill;
         profileSkill.Progress += adjustedSkillProgress;
         profileSkill.Progress = Math.Min(profileSkill.Progress, 5100); // Prevent skill from ever going above level 51 (5100)
 
