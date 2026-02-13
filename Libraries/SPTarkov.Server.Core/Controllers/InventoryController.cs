@@ -278,7 +278,12 @@ public class InventoryController(
 
         // TODO: update this with correct calculation using values from globals json
         // TODO: verify this is still giving intellect skill points on live
-        profileHelper.AddSkillPointsToPlayer(fullProfile.CharacterData.PmcData, SkillTypes.Intellect, 0.05 * itemTpls.Count());
+        profileHelper.AddSkillPointsToPlayer(
+            fullProfile.CharacterData.PmcData,
+            SkillTypes.Intellect,
+            0.05 * itemTpls.Count(),
+            useSkillProgressRateMultiplier: false
+        );
     }
 
     /// <summary>

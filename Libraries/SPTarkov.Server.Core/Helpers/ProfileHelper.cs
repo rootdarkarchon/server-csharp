@@ -461,6 +461,23 @@ public class ProfileHelper(
     }
 
     /// <summary>
+    ///     Add points to a specific skill in player profile, adjusted for low levels by default
+    /// </summary>
+    /// <param name="pmcProfile">Player profile with skill</param>
+    /// <param name="skill">Skill to add points to</param>
+    /// <param name="pointsToAddToSkill">Points to add</param>
+    /// <param name="useSkillProgressRateMultiplier">Skills are multiplied by a value in globals, default is off to maintain compatibility with legacy code</param>
+    public void AddSkillPointsToPlayer(
+        PmcData pmcProfile,
+        SkillTypes skill,
+        double pointsToAddToSkill,
+        bool useSkillProgressRateMultiplier = false
+    )
+    {
+        AddSkillPointsToPlayer(pmcProfile, skill, pointsToAddToSkill, useSkillProgressRateMultiplier, true);
+    }
+
+    /// <summary>
     ///     Add points to a specific skill in player profile
     /// </summary>
     /// <param name="pmcProfile">Player profile with skill</param>

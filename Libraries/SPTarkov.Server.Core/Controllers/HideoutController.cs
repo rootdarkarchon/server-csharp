@@ -950,7 +950,12 @@ public class HideoutController(
             var intellectAmountToGive = 0.5 * Math.Round((double)(craftingExpAmount / 15));
             if (intellectAmountToGive > 0)
             {
-                profileHelper.AddSkillPointsToPlayer(pmcData, SkillTypes.Intellect, intellectAmountToGive);
+                profileHelper.AddSkillPointsToPlayer(
+                    pmcData,
+                    SkillTypes.Intellect,
+                    intellectAmountToGive,
+                    useSkillProgressRateMultiplier: false
+                );
             }
         }
 
