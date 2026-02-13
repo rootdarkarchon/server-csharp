@@ -217,7 +217,8 @@ public class HideoutController(
         profileHelper.AddSkillPointsToPlayer(
             pmcData,
             SkillTypes.HideoutManagement,
-            globals.Configuration.SkillsSettings.HideoutManagement.SkillPointsPerAreaUpgrade
+            globals.Configuration.SkillsSettings.HideoutManagement.SkillPointsPerAreaUpgrade,
+            true
         );
     }
 
