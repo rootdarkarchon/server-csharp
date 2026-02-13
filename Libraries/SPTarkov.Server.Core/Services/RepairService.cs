@@ -247,7 +247,7 @@ public class RepairService(
     protected double GetWeaponRepairSkillPoints(RepairDetails repairDetails)
     {
         var random = new Random();
-        // Every 5 points repaired with kit should give 0.4 skill points, so PointGainMultiplier is 0.1
+        // Every 5 points repaired with kit should give 0.4 skill points, so PointGainMultiplier is 0.2
         // The return value is later scaled in AddSkillPointsToPlayer, i.e. 1 skill point returned here = 0.4 skill points added
         var skillPoints = repairDetails.RepairAmount.GetValueOrDefault(0) * RepairConfig.WeaponTreatment.PointGainMultiplier;
 
