@@ -195,7 +195,7 @@ public class PrestigeHelper(
                 case RewardType.Skill:
                     if (Enum.TryParse(reward.Target, out SkillTypes result))
                     {
-                        profileHelper.AddSkillPointsToPlayer(newProfile.CharacterData!.PmcData!, result, reward.Value.GetValueOrDefault(0));
+                        profileHelper.AddSkillPointsToPlayer(newProfile.CharacterData!.PmcData!, result, reward.Value.GetValueOrDefault(0), adjustSkillExpForLowLevels: false);
                     }
                     else
                     {

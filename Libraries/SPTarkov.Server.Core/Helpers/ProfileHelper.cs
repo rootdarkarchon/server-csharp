@@ -467,11 +467,13 @@ public class ProfileHelper(
     /// <param name="skill">Skill to add points to</param>
     /// <param name="pointsToAddToSkill">Points to add</param>
     /// <param name="useSkillProgressRateMultiplier">Skills are multiplied by a value in globals, default is off to maintain compatibility with legacy code</param>
+    /// <param name="adjustSkillExpForLowLevels">Skills are multiplied by a multiplier for lower levels; if false, treats every level as requiring 100 points</param>
     public void AddSkillPointsToPlayer(
         PmcData pmcProfile,
         SkillTypes skill,
         double pointsToAddToSkill,
-        bool useSkillProgressRateMultiplier = false
+        bool useSkillProgressRateMultiplier = false,
+        bool adjustSkillExpForLowLevels = true
     )
     {
         if (pointsToAddToSkill < 0D)
@@ -517,7 +519,7 @@ public class ProfileHelper(
             pointsToAddToSkill *= multiplier;
         }
 
-        var adjustedSkillProgress = AdjustSkillExpForLowLevels(profileSkill.Progress, pointsToAddToSkill);
+        var adjustedSkillProgress = adjustSkillExpForLowLevels ? AdjustSkillExpForLowLevels(profileSkill.Progress, pointsToAddToSkill) : pointsToAddToSkill;
         profileSkill.Progress += adjustedSkillProgress;
         profileSkill.Progress = Math.Min(profileSkill.Progress, 5100); // Prevent skill from ever going above level 51 (5100)
 

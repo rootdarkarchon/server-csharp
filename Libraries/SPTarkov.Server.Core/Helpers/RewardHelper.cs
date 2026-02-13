@@ -76,7 +76,8 @@ public class RewardHelper(
                     profileHelper.AddSkillPointsToPlayer(
                         profileData,
                         Enum.Parse<SkillTypes>(reward.Target),
-                        reward.Value.GetValueOrDefault(0)
+                        reward.Value.GetValueOrDefault(0),
+                        adjustSkillExpForLowLevels: false
                     );
                     break;
                 case RewardType.Experience:
