@@ -688,8 +688,9 @@ public class HideoutController(
         );
         pmcData.Hideout.Production[request.RecipeId].SptIsScavCase = true;
 
-        // reward charisma based on skill progress rate for each scav production start
+        // reward charisma and hideout management based on skill progress rate for each scav production start
         profileHelper.AddSkillPointsToPlayer(pmcData, SkillTypes.Charisma, 1, true);
+        profileHelper.AddSkillPointsToPlayer(pmcData, SkillTypes.HideoutManagement, 1, true);
 
         return output;
     }
